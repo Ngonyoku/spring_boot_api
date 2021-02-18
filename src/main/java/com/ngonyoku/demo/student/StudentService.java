@@ -1,5 +1,6 @@
 package com.ngonyoku.demo.student;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -10,15 +11,14 @@ import java.util.List;
 @Service //This annotates that this is a service class and is available for dependecy injection
 public class StudentService {
 
+    private final StudentRepository studentRepository;
+
+    @Autowired
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
+
     public List<Student> getStudents() {
-        return List.of(
-                new Student(
-                        1L,
-                        "Roderick Ngonyoku",
-                        20,
-                        LocalDate.of(2001, Month.MARCH, 24),
-                        "ngonyoku@example.com"
-                )
-        );
+        return studentRepository.findAll();
     }
 }
