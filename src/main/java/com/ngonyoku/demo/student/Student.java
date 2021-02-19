@@ -1,13 +1,30 @@
 package com.ngonyoku.demo.student;
 
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.Period;
 
+@Entity
+@Table
 public class Student {
+
+    @Id
+    @SequenceGenerator(
+            name = "student_sequence",
+            sequenceName = "student_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "student_sequence"
+    )
     private Long id;
     private String name;
-    private Integer age;
-    private LocalDate db;
+    private LocalDate dob;
     private String email;
+
+    @Transient
+    private Integer age;
 
     public Student() {
     }
@@ -18,23 +35,21 @@ public class Student {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
-                ", db=" + db +
+                ", db=" + dob +
                 ", email='" + email + '\'' +
                 '}';
     }
 
-    public Student(String name, Integer age, LocalDate db, String email) {
+    public Student(String name, LocalDate dob, String email) {
         this.name = name;
-        this.age = age;
-        this.db = db;
+        this.dob = dob;
         this.email = email;
     }
 
-    public Student(Long id, String name, Integer age, LocalDate db, String email) {
+    public Student(Long id, String name, LocalDate dob, String email) {
         this.id = id;
         this.name = name;
-        this.age = age;
-        this.db = db;
+        this.dob = dob;
         this.email = email;
     }
 
@@ -55,19 +70,19 @@ public class Student {
     }
 
     public Integer getAge() {
-        return age;
+        return Period.between(this.dob, LocalDate.now()).getYears();
     }
 
     public void setAge(Integer age) {
         this.age = age;
     }
 
-    public LocalDate getDb() {
-        return db;
+    public LocalDate getDob() {
+        return dob;
     }
 
-    public void setDb(LocalDate db) {
-        this.db = db;
+    public void setDob(LocalDate dob) {
+        this.dob = dob;
     }
 
     public String getEmail() {
