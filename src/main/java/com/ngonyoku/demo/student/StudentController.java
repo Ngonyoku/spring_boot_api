@@ -23,9 +23,16 @@ public class StudentController {
         return studentService.getStudents();
     }
 
+    //Carry out the Post Requests
     @PostMapping
     public void registerNewStudent(@RequestBody Student student) {
         //The request body will be taken and mapped onto the student object as passed in the parameter 
         studentService.addNewStudent(student);
+    }
+
+    //Deletes a Student based on the ID
+    @DeleteMapping(path = "{studentId}")
+    public void deleteStudent(@PathVariable("studentId") Long studentId) {
+        studentService.deleteStudent(studentId);
     }
 }

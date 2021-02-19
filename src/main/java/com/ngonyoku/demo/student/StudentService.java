@@ -3,8 +3,6 @@ package com.ngonyoku.demo.student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,5 +31,15 @@ public class StudentService {
         }
 
         System.out.println(student);
+    }
+
+    //Delete the Student By Id
+    public void deleteStudent(Long studentId) {
+        boolean exists = studentRepository.existsById(studentId);
+        if (!exists) {
+            throw new IllegalStateException("Student with id " + studentId + " does NOT EXIST");
+        }
+
+        studentRepository.deleteById(studentId);
     }
 }
